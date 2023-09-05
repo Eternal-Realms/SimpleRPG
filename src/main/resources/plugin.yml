@@ -1,0 +1,4 @@
+name: SimpleRPG
+version: '${project.version}'
+main: com.github.akagiant.simplerpg.SimpleRPG
+api-version: '1.20'

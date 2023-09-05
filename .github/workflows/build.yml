@@ -1,0 +1,41 @@
+name: build
+
+on:
+  push:
+    branches: 
+      - master
+      - dev
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        # Use these Java versions
+        java: [17]
+        # and run on both Linux and Windows
+        # os: [ubuntu-20.04, windows-2022]
+        os: [ubuntu-20.04]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: SetupJDK ${{ matrix.java }}
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: ${{ matrix.java }}
+
+    - name: Build using Maven
+      run: mvn clean install
+
+    - name: Upload Plugin Artifact
+      if: ${{ runner.os == 'Linux' && matrix.java == '17' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: SimpleRPG
+        path: target/SimpleRPG-1.0.jar
+        if-no-files-found: error
