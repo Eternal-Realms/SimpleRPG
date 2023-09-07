@@ -171,7 +171,7 @@ public class ConfigUtil {
 	 * If a user wants to define 10, they can also define 10.1 in most cases.
 	 * Only using an Integer or a Double will not work in this case.
 	 */
-	public static Optional<?> getNumber(Config config, String path) {
+	public static Optional<? extends Number> getNumber(Config config, String path) {
 		if (!isSet(config, path)) {
 			logError(config, path, valueMissing, null, decimalNumber);
 			return Optional.empty();

@@ -1,0 +1,6 @@
+[book]
+authors = ["AkaGiant"]
+language = "en"
+multilingual = false
+src = "src"
+title = "SimpleRPG Documentation"
