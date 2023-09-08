@@ -22,7 +22,7 @@ public class MobUtil {
 		TextDisplay textDisplay = (TextDisplay) mob.getWorld().spawnEntity(mob.getLocation(), EntityType.TEXT_DISPLAY);
 
 		String icon = "|";
-		int requiredIcons = (int) (mob.getMaxHealth());
+		int requiredIcons = (int) (getMaxHealth(mob));
 
 		textDisplay.text(Component.text(NamedTextColor.GREEN + icon.repeat(Math.max(0, requiredIcons))));
 
@@ -47,6 +47,7 @@ public class MobUtil {
 	public static double getMaxHealth(Mob mob) {
 		return Objects.requireNonNull(mob.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue();
 	}
+
 
 	public static int getUserDefinedViewRange(Mob mob) {
 		String mobName = mob.getName().toLowerCase().replace(" ", "_");

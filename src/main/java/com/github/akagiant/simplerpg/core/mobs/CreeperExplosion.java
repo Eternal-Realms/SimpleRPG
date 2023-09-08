@@ -12,9 +12,12 @@ import org.bukkit.util.Vector;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class CreeperExplosion {
+
+	Random random = new Random();
 
 	public CreeperExplosion(Entity entity) {
 
@@ -29,9 +32,9 @@ public class CreeperExplosion {
 		for (Block block : blocks) {
 			block.setType(Material.DIAMOND_BLOCK);
 
-			float x = (float) (Math.floor(Math.random() * (200 - -200 + 1) + -200) / 1200) * ((float) radius / 2);
-			float y = (float) (Math.floor(Math.random() * (100 -  300 + 1) + 300) / 1200) * ((float) radius / 2);
-			float z = (float) (Math.floor(Math.random() * (200 - -200 + 1) + -200) / 1200) * ((float) radius / 2);
+			float x = (float) (Math.floor(random.nextDouble() * (200 - -200 + 1) + -200) / 1200) * ((float) radius / 2);
+			float y = (float) (Math.floor(random.nextDouble() * (100 -  300 + 1) + 300) / 1200) * ((float) radius / 2);
+			float z = (float) (Math.floor(random.nextDouble() * (200 - -200 + 1) + -200) / 1200) * ((float) radius / 2);
 
 			FallingBlock fallingBlock = block.getWorld().spawnFallingBlock(block.getLocation(), block.getBlockData());
 			fallingBlock.setDropItem(false);
@@ -54,9 +57,9 @@ public class CreeperExplosion {
 					cancel();
 				}
 
-				lists.get(index).forEach(block -> {
-					block.getWorld().getBlockAt(block.getLocation()).setType(Material.AIR);
-				});
+				lists.get(index).forEach(block ->
+					block.getWorld().getBlockAt(block.getLocation()).setType(Material.AIR)
+				);
 				index++;
 			}
 		}.runTaskTimer(SimpleRPG.getPlugin(), 100L, 20L);
