@@ -50,14 +50,6 @@ public class RPGPlayerManager {
 
 	// To be used at a later date.
 
-//	public static void start() {
-//		Bukkit.getScheduler().scheduleSyncRepeatingTask(SimpleRPG.getPlugin(), () -> {
-//			for (RPGPlayer rpgPlayer : RPGPlayerManager.get()) {
-//				if (rpgPlayer.getPlayer().isOnline()) {
-//					rpgPlayer.save();
-//				}
-//			}
-//		}, 0L, 600L);
-//	}
+
 	
 }

@@ -111,7 +111,8 @@ public class Config {
 
 	public void reloadConfig() {
 		if (!exists()) {
-			Bukkit.getLogger().severe(fileName + ".yml does not exists!");
+			String fileName2 = fileName.formatted("%s.yml does not exist!");
+			Bukkit.getLogger().severe(fileName2);
 			return;
 		}
 		fileConfiguration = YamlConfiguration.loadConfiguration(file);
@@ -127,7 +128,7 @@ public class Config {
 	private static List<File> listf(String directoryName) {
 		File directory = new File(directoryName);
 
-		List<File> resultList = new ArrayList<File>();
+		List<File> resultList = new ArrayList<>();
 
 		// get all the files from a directory
 		File[] fList = directory.listFiles();

@@ -158,10 +158,6 @@ public class ConfigUtil {
 			logError(config, path, valueMissing, null, decimalNumber);
 			return Optional.empty();
 		}
-//		if (!config.getConfig().isDouble(path)) {
-//			logError(config, path, valueNotValid, null, decimalNumber);
-//			return Optional.empty();
-//		}
 		return Optional.of(config.getConfig().getDouble(path));
 	}
 
@@ -171,7 +167,7 @@ public class ConfigUtil {
 	 * If a user wants to define 10, they can also define 10.1 in most cases.
 	 * Only using an Integer or a Double will not work in this case.
 	 */
-	public static Optional<? extends Number> getNumber(Config config, String path) {
+	public static Optional<Number> getNumber(Config config, String path) {
 		if (!isSet(config, path)) {
 			logError(config, path, valueMissing, null, decimalNumber);
 			return Optional.empty();
@@ -179,27 +175,27 @@ public class ConfigUtil {
 		
 		if (config.getConfig().isDouble(path)) {
 			Optional<Double> value = getDouble(config, path);
-			return Optional.of(value).get();
+			return value.map(d -> d);
 		}
 		else if (config.getConfig().isInt(path)) {
 			Optional<Integer> value = getInt(config, path);
-			return Optional.of(value).get();
+			return value.map(d -> d);
 		}
 		return Optional.empty();
 	}
 	
-	public static Optional<?> getNumberNoLog(Config config, String path) {
+	public static Optional<Number> getNumberNoLog(Config config, String path) {
 		if (!isSet(config, path)) {
 			return Optional.empty();
 		}
 		
 		if (config.getConfig().isDouble(path)) {
 			Optional<Double> value = getDouble(config, path);
-			return Optional.of(value).get();
+			return value.map(d -> d);
 		}
 		else if (config.getConfig().isInt(path)) {
 			Optional<Integer> value = getInt(config, path);
-			return Optional.of(value).get();
+			return value.map(d -> d);
 		}
 		return Optional.empty();
 	}

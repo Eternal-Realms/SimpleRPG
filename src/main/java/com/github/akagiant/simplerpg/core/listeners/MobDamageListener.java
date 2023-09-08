@@ -24,15 +24,11 @@ public class MobDamageListener implements Listener {
 	public void onPlayerDamage(EntityDamageEvent e) {
 		if (!(e.getEntity() instanceof Player)) return;
 
-		Player player = (Player) e.getEntity();
-
 		EntityDamageEvent.DamageCause damageCause = e.getCause();
 		Logger.severe(String.valueOf(damageCause));
 
-		switch (damageCause) {
-			case ENTITY_EXPLOSION -> {
-
-			}
+		if (damageCause == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
+			// Creeper
 		}
 
 		// Damage Was caused by a Creeper
@@ -44,7 +40,7 @@ public class MobDamageListener implements Listener {
 	public void onMobDamagePlayer(EntityDamageByEntityEvent e) {
 		if (!((e.getDamager()) instanceof Mob) || (!(e.getEntity() instanceof Player))) return;
 
-		Mob mob = (Mob) e.getDamager();
+//		Mob mob = (Mob) e.getDamager();
 		// Get Base Damage
 
 		// Get Damage Type (Explosive, Physical etc)
@@ -53,7 +49,7 @@ public class MobDamageListener implements Listener {
 
 		// Adjust Base Damage Based on Level
 
-		Player player = (Player) e.getEntity();
+//		Player player = (Player) e.getEntity();
 		// Get Player Level
 
 		// Get Player Defensive Stats
@@ -65,45 +61,5 @@ public class MobDamageListener implements Listener {
 
 
 	}
-
-// This is just code I want to keep around encase I want to use it in the future.
-//		new BukkitRunnable() {
-//			int count = 0;
-//			Vector movement = null;
-//			List<Block> blocks = getNearbyBlocks(creeper.getLocation(), 15);
-//			List<FallingBlock> fallingBlocks = new ArrayList<>();
-//
-//			// 20 Ticks * wanted seconds;
-//			int maxTime = 300;
-//
-//			public void run() {
-//				if (count == maxTime) {
-//					cancel();
-//
-//					creeper.remove();
-//					for (FallingBlock fallingBlock : fallingBlocks) {
-//						fallingBlock.setGravity(true);
-//					}
-//
-//					return;
-//				}
-//
-//				Random r = new Random();
-//				Block block = blocks.get(r.nextInt(blocks.size()));
-//
-//				FallingBlock fallingBlock = creeper.getWorld().spawnFallingBlock(block.getLocation(), block.getBlockData());
-//				fallingBlock.setVelocity((fallingBlock.getLocation().toVector().subtract(creeper.getLocation().toVector())
-//					.multiply(-10).normalize()));
-//
-//				fallingBlock.setGravity(false);
-//				fallingBlock.setDropItem(false);
-//				fallingBlock.setHurtEntities(true);
-//
-//				fallingBlocks.add(fallingBlock);
-//
-//				count++;
-//
-//			}
-//		}.runTaskTimer(SimpleRPG.getPlugin(), 0, 0);
 
 }

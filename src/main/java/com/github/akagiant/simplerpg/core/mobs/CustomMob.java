@@ -9,13 +9,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Mob;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 public class CustomMob {
 
-	private static Config config = ConfigManager.mobs;
+	private static final Config config = ConfigManager.mobs;
 
 	double health;
 	double healthBarViewRange;
@@ -37,27 +38,27 @@ public class CustomMob {
 	public static Set<CustomMob> initialise() {
 		Set<CustomMob> customMobList = new HashSet<>();
 
-		for (EntityType entityType : EntityType.values()) {
+		Arrays.stream(EntityType.values()).filter(EntityType::isSpawnable).map(
+			entityType ->
+				Bukkit.getWorlds().get(0).spawnEntity(
+					new Location(Bukkit.getWorlds().get(0), 0, 50, 0), entityType
+				)
+			)
+			.filter(Mob.class::isInstance).forEach(entity -> {
 
-			if (!entityType.isSpawnable()) continue;
+				String mobName = entity.getName().toLowerCase().replace(" ", "_");
+				if (!ConfigUtil.isSet(ConfigManager.mobs, mobName)) {
+					ConfigManager.mobs.getConfig().set(mobName + ".view-distance", 10);
+					ConfigManager.mobs.getConfig().set(mobName + ".health", MobUtil.getMaxHealth(entity));
+					ConfigManager.mobs.saveConfig();
+				}
 
-			Entity entity = Bukkit.getWorlds().get(0).spawnEntity(new Location(Bukkit.getWorlds().get(0), 0, 50, 0), entityType);
-			if (!(entity instanceof Mob)) continue;
+				CustomMob customMob = new CustomMob(entity);
+				customMobList.add(customMob);
 
-			String mobName = entity.getName().toLowerCase().replace(" ", "_");
+				entity.remove();
+			});
 
-			if (!ConfigUtil.isSet(ConfigManager.mobs, mobName)) {
-				ConfigManager.mobs.getConfig().set(mobName + ".view-distance", 10);
-				ConfigManager.mobs.getConfig().set(mobName + ".health", ((Mob) entity).getMaxHealth());
-				ConfigManager.mobs.saveConfig();
-			}
-
-			CustomMob customMob = new CustomMob(entity);
-			if (customMobList.contains(customMob)) continue;
-			customMobList.add(customMob);
-
-			entity.remove();
-		}
 		return customMobList;
 	}
 }

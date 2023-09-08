@@ -49,7 +49,7 @@ public class Util {
 				for (int z = blockZ - radius; z <= blockZ + radius; z++) {
 					if ((blockX - x) * (blockX - x) + (blockY - y) * (blockY - y) + (blockZ - z) * (blockZ - z) <= radiusSquared) {
 						Block block = location.getWorld().getBlockAt(x, y, z);
-						if (block.getType().equals(Material.AIR) || block.getType().equals(Material.GRASS) || block.getType().equals(Material.TALL_GRASS)) continue;
+						if (block.getType().equals(Material.AIR)) continue;
 						blocks.add(block);
 					}
 				}

@@ -26,7 +26,7 @@ public class PlaceholderManager extends PlaceholderExpansion {
 	public String onRequest(OfflinePlayer offlinePlayer, @NotNull String params) {
 
 		DecimalFormat df = new DecimalFormat("###,###,###,###,###.##");
-		return null;
+		return df.format(null);
 	}
 	
 }
