@@ -1,11 +1,9 @@
 name: SonarCloud
 on:
-  push:
-    branches:
-      - master
-      - dev
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_run:
+    workflows: [build]
+    types: [completed]
+
 jobs:
   build:
     name: Build and analyze
