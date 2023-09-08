@@ -1,10 +1,13 @@
 package com.github.akagiant.simplerpg.core.listeners;
 
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent;
+import com.github.akagiant.simplerpg.core.mobs.MobUtil;
 import com.github.akagiant.simplerpg.core.player.RPGPlayer;
 import com.github.akagiant.simplerpg.core.player.RPGPlayerManager;
 import com.github.akagiant.simplerpg.utility.timer.Timer;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -57,34 +60,33 @@ public class MobDieListener implements Listener {
 		TextDisplay healthBar = displayMap.get(entity.getUniqueId());
 		String icon = "|";
 
-		int requiredIcons = (int) (mob.getMaxHealth());
-		int missingHealth = (int) (mob.getMaxHealth() - (mob.getHealth() - damage));
+		int requiredIcons = (int) MobUtil.getMaxHealth(mob);
+		int missingHealth = (int) ((int) MobUtil.getMaxHealth(mob) - (mob.getHealth() - damage));
 
-		double missingHealthAsPercentageOfMax = (missingHealth / mob.getMaxHealth()) * 100;
+		double missingHealthAsPercentageOfMax = (missingHealth / MobUtil.getMaxHealth(mob)) * 100;
 
-		ChatColor chatColor;
+		NamedTextColor chatColor;
 		if (missingHealthAsPercentageOfMax <= 25) {
-			chatColor = ChatColor.GREEN;
+			chatColor = NamedTextColor.GREEN;
 		} else if (missingHealthAsPercentageOfMax <= 50) {
-			chatColor = ChatColor.GOLD;
+			chatColor = NamedTextColor.GOLD;
 		} else {
-			chatColor = ChatColor.RED;
+			chatColor = NamedTextColor.RED;
 		}
 
 		// Kept due to icons eventually not being a 1-1 ratio with icons.
-		int amountOfIconsToRemove = missingHealth;
 
-		String normalIcons = chatColor + icon.repeat(Math.max(0, requiredIcons - amountOfIconsToRemove));
-		String damageIcons = ChatColor.GRAY + icon.repeat(Math.max(0, amountOfIconsToRemove));
+		String normalIcons = chatColor + icon.repeat(Math.max(0, requiredIcons - missingHealth));
+		String damageIcons = NamedTextColor.GRAY + icon.repeat(Math.max(0, missingHealth));
 
-		healthBar.setText(normalIcons + damageIcons);
+		healthBar.text(Component.text(normalIcons + damageIcons));
 
 	}
 
 	private void displayDamageIndicators(Mob mob, double damage) {
 		TextDisplay damageIndicator = (TextDisplay) mob.getWorld().spawnEntity(mob.getLocation(), EntityType.TEXT_DISPLAY);
 
-		damageIndicator.setText(ChatColor.RED + "" +  ChatColor.BOLD + "" + damage);
+		damageIndicator.text(Component.text(NamedTextColor.RED + "" + TextDecoration.BOLD  + damage));
 		damageIndicator.setBillboard(Display.Billboard.CENTER);
 		Vector3f vector3f = damageIndicator.getTransformation().getTranslation().add(0f, 0.5f, 0.0f);
 		damageIndicator.setTransformation(new Transformation(vector3f, new AxisAngle4f(), damageIndicator.getTransformation().getScale().add(1, 1, 1), new AxisAngle4f()));
