@@ -2,6 +2,7 @@ package com.github.akagiant.simplerpg;
 
 import com.github.akagiant.simplerpg.core.listeners.MobDamageListener;
 import com.github.akagiant.simplerpg.core.listeners.MobSpawnListener;
+import com.github.akagiant.simplerpg.utility.Logger;
 import com.github.akagiant.simplerpg.utility.configuration.ConfigManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -24,6 +25,9 @@ public final class SimpleRPG extends JavaPlugin implements Listener {
 
 		getServer().getPluginManager().registerEvents(new MobSpawnListener(), this);
 		getServer().getPluginManager().registerEvents(new MobDamageListener(), this);
+
+		Logger.severe("Enabled");
+
 	}
 
     @Override
