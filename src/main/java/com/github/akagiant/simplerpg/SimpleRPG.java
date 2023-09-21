@@ -4,6 +4,9 @@ import com.github.akagiant.simplerpg.core.listeners.MobDamageListener;
 import com.github.akagiant.simplerpg.core.listeners.MobSpawnListener;
 import com.github.akagiant.simplerpg.utility.Logger;
 import com.github.akagiant.simplerpg.utility.configuration.ConfigManager;
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import dev.jorel.commandapi.CommandAPIConfig;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -17,9 +20,16 @@ public final class SimpleRPG extends JavaPlugin implements Listener {
 
 
 	@Override
+	public void onLoad() {
+		CommandAPI.onLoad(new CommandAPIBukkitConfig(this).silentLogs(true));
+	}
+
+	@Override
 	public void onEnable() {
 		// Plugin startup logic
 		plugin = this;
+
+		CommandAPI.onEnable();
 
 		ConfigManager.registerConfigurations();
 
@@ -32,6 +42,9 @@ public final class SimpleRPG extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+
+		CommandAPI.onDisable();
+
         // Plugin shutdown logic
 		Bukkit.getServer().getScheduler().cancelTasks(this);
     }

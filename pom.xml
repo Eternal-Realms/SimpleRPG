@@ -45,8 +45,12 @@
                             <outputFile>D:\Desktop\EternalRealmsRPG\1.20.1\plugins\${project.name}-v${project.version}.jar</outputFile>
                             <relocations>
                                 <relocation>
+                                    <pattern>dev.jorel.commandapi</pattern>
+                                    <shadedPattern>com.github.akagiant.simplerpg.commandapi</shadedPattern>
+                                </relocation>
+                                <relocation>
                                     <pattern>de.tr7zw.changeme.nbtapi</pattern>
-                                    <shadedPattern>com.github.akagiant.planetary.nbtapi</shadedPattern>
+                                    <shadedPattern>com.github.akagiant.simplerpg.nbtapi</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -105,5 +109,11 @@
             <artifactId>item-nbt-api</artifactId>
             <version>2.11.1</version>
         </dependency>
+        <dependency>
+            <groupId>dev.jorel</groupId>
+            <artifactId>commandapi-bukkit-shade</artifactId>
+            <version>9.1.0</version>
+        </dependency>
+
     </dependencies>
 </project>
